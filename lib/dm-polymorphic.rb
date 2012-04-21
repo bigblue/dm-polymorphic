@@ -1,3 +1,4 @@
+require 'active_support/inflector'
 module DataMapper
   module Model
     module Relationship
@@ -13,7 +14,7 @@ module DataMapper
           opts[:child_key] = "#{as}_id".to_sym
           opts["#{as}_#{suffix}".to_sym] = self
 
-          child_model_name = opts[:model] || opts[:class_name] || ActiveSupport::Inflector.classify(name)
+          child_model_name = opts[:model] || opts[:class_name] || ActiveSupport::Inflector.classify(ActiveSupport::Inflector.singularize(name.to_s))
           child_klass      = ActiveSupport::Inflector.constantize(child_model_name)
           belongs_to_name  = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.demodulize(self.name))
 
